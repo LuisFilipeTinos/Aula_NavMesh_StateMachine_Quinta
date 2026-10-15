@@ -99,4 +99,33 @@ public class PlayerController : MonoBehaviour
         Vector3 move = finalInput * speed;
         controller.Move(move * Time.deltaTime);
     }
+
+    [Header("Ataque")]
+    public float attackReach = 1.5f;
+    public float attackRadius = 1.2f;
+
+    public void Hit()
+    {
+        Vector3 center = 
+            transform.position + Vector3.up + transform.forward * attackReach;
+
+        Collider[] hits = Physics.OverlapSphere(center, attackRadius);
+
+        foreach (Collider hit in hits)
+        {
+            EnemyController enemy = hit.GetComponentInParent<EnemyController>();
+            if (enemy != null)
+            {
+                enemy.Death();
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(
+            transform.position + Vector3.up + transform.forward * attackReach, attackRadius
+        );
+    }
 }
