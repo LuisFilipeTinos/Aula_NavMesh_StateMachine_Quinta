@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,12 +19,16 @@ public class PlayerController : MonoBehaviour
     Vector3 moveInput;
     Vector3 finalInput;
 
+    public int killedEnemies;
+    public event Action<int> OnEnemyKilled;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         cam = Camera.main.transform;
         controls = new PlayerControls();
+        killedEnemies = 0;
     }
 
     void OnEnable()
@@ -117,6 +122,8 @@ public class PlayerController : MonoBehaviour
             if (enemy != null)
             {
                 enemy.Death();
+                killedEnemies++;
+                OnEnemyKilled?.Invoke(killedEnemies);
             }
         }
     }
