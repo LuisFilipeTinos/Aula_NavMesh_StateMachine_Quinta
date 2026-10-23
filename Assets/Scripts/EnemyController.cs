@@ -28,6 +28,8 @@ public class EnemyController : MonoBehaviour
     ChaseState chase;
     AttackState attack;
 
+    [SerializeField] AudioSource deathSoundEffect;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -200,6 +202,8 @@ public class EnemyController : MonoBehaviour
         }
 
         animator.SetTrigger("Death");
+
+        deathSoundEffect.Play();
 
         enabled = false;
     }

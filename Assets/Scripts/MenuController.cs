@@ -9,4 +9,10 @@ public class MenuController : MonoBehaviour
    {
        animator.SetTrigger("Fade");
    }
+
+   public void ExitGame()
+   {
+        Debug.Log("Saiu do jogo");
+        Application.Quit();
+   }
 }

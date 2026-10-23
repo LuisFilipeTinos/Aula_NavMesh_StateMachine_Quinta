@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     public int killedEnemies;
     public event Action<int> OnEnemyKilled;
 
+    [SerializeField] AudioSource stepsSoundEffects;
+    [SerializeField] AudioClip[] stepsClips;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -134,5 +137,10 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(
             transform.position + Vector3.up + transform.forward * attackReach, attackRadius
         );
+    }
+
+    public void PlaySteps()
+    {
+        stepsSoundEffects.PlayOneShot(stepsClips[UnityEngine.Random.Range(0, stepsClips.Length)]);
     }
 }
